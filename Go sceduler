@@ -1,0 +1,17 @@
+go scheduler,is a concurrent design/mechaic
+goroutine: path to execute
+os scheduler schedule and dispath(distribute) thread, generatic to all threds
+go scheduler schedule and dispath(distribute) goroutine particular to goroutine
+to os scheduler,go scheduler has more information to schedule and orchestration
+最终目的  不让cpu处于idle的state,efficient use of cpu power
+解决问题 减小context switch的cost\当goroutine block(syscall/channel/mutex),切换到其他runable goroutine execute
+
+go sceduler分为M(machine thread)\P(logical processor)\G(goroutine)
+每个M必须associate一个P,一个P就是一个context
+four condition when go runtime scheduler have the opportunity to schedule
+(1) go func() create a goroutine,wait to be sheduled  
+(2)garbage collection when do garbage collection,go let goroutine which not touch the heap execute
+(3)synchronization (mutex or channel) let other goroutine executed
+(4)syscall network poll for networkIO/create another Mthread to associate the ordinary P
+
+goscheduler能够高效解决上述的问题
